@@ -38,7 +38,6 @@ protected:
 	float BaseTurnRate;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Camera")
 	float BaseLookUpAtRate;
-	
 
 public:	
 	// Called every frame
