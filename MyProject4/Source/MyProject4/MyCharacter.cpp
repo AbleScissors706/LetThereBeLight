@@ -99,11 +99,32 @@ void AMyCharacter::CallCrouch()
 	}
 }
 
+void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+{
+	Jump();
+}
+
+void AMyCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+{
+	StopJumping();
+}
+
+void AMyCharacter::OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+}
+
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AMyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnBoxBeginOverLap);
 }
 
 // Called to bind functionality to input
