@@ -40,6 +40,15 @@ void ALightSwitch::InteractWithMe()
 {
 	UE_LOG(LogTemp, Warning, TEXT("You have INTERACTED!!"));
 
-	Light->SetIntensity(10000);
+	if (bIsOn)
+	{
+		Light->SetIntensity(0);
+		bIsOn = false;
+	} 
+	else
+	{
+		Light->SetIntensity(10000);
+		bIsOn = true;
+	}
 }
 

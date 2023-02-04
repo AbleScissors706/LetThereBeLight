@@ -104,24 +104,27 @@ void AMyCharacter::CallCrouch()
 	}
 }
 
-/*void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Jump();
-}*/
+}
 
-/*void AMyCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+void AMyCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	StopJumping();
-}*/
+}
 
-void AMyCharacter::OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AMyCharacter::OnInteract()
 {
-	Interface = Cast<IInteractionInterface>(OtherActor);
-
 	if (Interface)
 	{
 		Interface->InteractWithMe();
 	}
+}
+
+void AMyCharacter::OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Interface = Cast<IInteractionInterface>(OtherActor);
 }
 
 // Called every frame
@@ -154,5 +157,11 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("TurnRate", this, &AMyCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AMyCharacter::LookUpAtRate);
 
+	//handle touch devices
+	PlayerInputComponent->BindTouch(IE_Pressed, this, &AMyCharacter::TouchStarted);
+	PlayerInputComponent->BindTouch(IE_Released, this, &AMyCharacter::TouchStopped);
+
+	//interact with objects
+	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AMyCharacter::OnInteract);
 }
 

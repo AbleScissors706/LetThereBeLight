@@ -35,7 +35,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* LightSwitchMesh;
 
-
 	UPROPERTY(EditAnywhere)
 	UPointLightComponent* Light;
+
+	bool bIsOn = false;
 };
