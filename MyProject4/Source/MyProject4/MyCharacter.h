@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Components/BoxComponent.h"
+#include "InteractionInterface.h"
 #include "MyCharacter.generated.h"
-
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -16,7 +16,6 @@ UCLASS()
 class MYPROJECT4_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
-
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
@@ -42,15 +41,17 @@ protected:
 	float BaseLookUpAtRate;
 
 	/** Handler for when a touch input begins. */
-	void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
+	//void TouchStarted(ETouchIndex::Type FingerIndex, FVector Location);
 
 	/** Handler for when a touch input stops. */
-	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
+	//void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 private:
 
 	UPROPERTY(EditAnywhere)
 	UBoxComponent* InteractionBox;
+
+	IInteractionInterface* Interface = nullptr;
 
 	UFUNCTION()
 	void OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -45,6 +46,10 @@ AMyCharacter::AMyCharacter()
 	BaseLookUpAtRate = 45.f;
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
+
+	InteractionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Interaction Box"));
+	InteractionBox->SetupAttachment(RootComponent);
+
 }
 
 
@@ -99,18 +104,24 @@ void AMyCharacter::CallCrouch()
 	}
 }
 
-void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
+/*void AMyCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	Jump();
-}
+}*/
 
-void AMyCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
+/*void AMyCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 	StopJumping();
-}
+}*/
 
 void AMyCharacter::OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	Interface = Cast<IInteractionInterface>(OtherActor);
+
+	if (Interface)
+	{
+		Interface->InteractWithMe();
+	}
 }
 
 // Called every frame
