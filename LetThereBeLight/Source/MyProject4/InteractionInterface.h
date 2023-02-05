@@ -24,4 +24,8 @@ class MYPROJECT4_API IInteractionInterface
 public:
 
 	virtual void InteractWithMe();
+
+	virtual void ShowInteractionWidget();
+	virtual void HideInteractionWidget();
 };
+

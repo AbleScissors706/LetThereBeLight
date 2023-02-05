@@ -10,6 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Components/BoxComponent.h"
+#include "LightSwitch.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -122,15 +123,45 @@ void AMyCharacter::OnInteract()
 	}
 }
 
-void AMyCharacter::OnBoxBeginOverLap(UPrimitiveComponent* OverLappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	Interface = Cast<IInteractionInterface>(OtherActor);
-}
-
 // Called every frame
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	TArray<AActor*>OverlappingActors;
+
+	InteractionBox->GetOverlappingActors(OverlappingActors);
+
+	if (OverlappingActors.Num() == 0)
+	{
+		if (Interface)
+		{
+			Interface->HideInteractionWidget();
+			Interface = nullptr;
+		}
+		return;
+	}
+
+	AActor* ClosestActor = OverlappingActors[0];
+
+	for (auto CurrentActor : OverlappingActors)
+	{
+		if (GetDistanceTo(CurrentActor) < GetDistanceTo(ClosestActor))
+		{
+			ClosestActor = CurrentActor;
+		}
+	}
+
+	if (Interface)
+	{
+		Interface->HideInteractionWidget();
+	}
+
+	Interface = Cast<IInteractionInterface>(ClosestActor);
+
+	if (Interface)
+	{
+		Interface->ShowInteractionWidget();
+	}
 
 }
 
@@ -138,7 +169,6 @@ void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnBoxBeginOverLap);
 }
 
 // Called to bind functionality to input
