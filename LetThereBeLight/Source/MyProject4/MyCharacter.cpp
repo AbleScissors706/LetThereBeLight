@@ -123,51 +123,26 @@ void AMyCharacter::OnInteract()
 	}
 }
 
-// Called every frame
+void AMyCharacter::OnBoxBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	Interface = Cast<IInteractionInterface>(OtherActor);
+}
+
+void AMyCharacter::OnBoxEndOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+}
+
 void AMyCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	TArray<AActor*>OverlappingActors;
-
-	InteractionBox->GetOverlappingActors(OverlappingActors);
-
-	if (OverlappingActors.Num() == 0)
-	{
-		if (Interface)
-		{
-			Interface->HideInteractionWidget();
-			Interface = nullptr;
-		}
-		return;
-	}
-
-	AActor* ClosestActor = OverlappingActors[0];
-
-	for (auto CurrentActor : OverlappingActors)
-	{
-		if (GetDistanceTo(CurrentActor) < GetDistanceTo(ClosestActor))
-		{
-			ClosestActor = CurrentActor;
-		}
-	}
-
-	if (Interface)
-	{
-		Interface->HideInteractionWidget();
-	}
-
-	Interface = Cast<IInteractionInterface>(ClosestActor);
-
-	if (Interface)
-	{
-		Interface->ShowInteractionWidget();
-	}
 
 }
 
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	InteractionBox->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnBoxBeginOverlap);
 
 }
 

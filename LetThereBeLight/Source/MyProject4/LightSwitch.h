@@ -7,6 +7,7 @@
 #include "InteractionInterface.h"
 #include "Components/PointLightComponent.h"
 #include "Components/WidgetComponent.h"
+
 #include "LightSwitch.generated.h"
 
 UCLASS()
