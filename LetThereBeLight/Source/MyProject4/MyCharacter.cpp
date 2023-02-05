@@ -124,9 +124,9 @@ void AMyCharacter::OnInteract()
 }
 
 // Called every frame
-void AMyCharacter::Tick(float DeltaTime)
+void AMyCharacter::Tick(float DeltaSeconds)
 {
-	Super::Tick(DeltaTime);
+	Super::Tick(DeltaSeconds);
 	TArray<AActor*>OverlappingActors;
 
 	InteractionBox->GetOverlappingActors(OverlappingActors);
