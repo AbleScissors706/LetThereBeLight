@@ -17,6 +17,18 @@ APickUp::APickUp()
 	RootComponent = PickUpMesh;
 }
 
+//return active state
+bool APickUp::IsActive()
+{
+	return bIsActive;
+}
+
+//change active state
+void APickUp::SetActive(bool NewPickUpState)
+{
+	bIsActive = NewPickUpState;
+}
+
 // Called when the game starts or when spawned
 void APickUp::BeginPlay()
 {

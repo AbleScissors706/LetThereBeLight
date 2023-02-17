@@ -3,24 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "PickUp.h"
 #include "KeyPickUp.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class MYPROJECT4_API AKeyPickUp : public AActor
+class MYPROJECT4_API AKeyPickUp : public APickUp
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AKeyPickUp();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	
 };

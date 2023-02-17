@@ -2,26 +2,10 @@
 
 
 #include "KeyPickUp.h"
+#include "PickUp.h"
 
-// Sets default values
+//set default value
 AKeyPickUp::AKeyPickUp()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	GetMesh()->SetSimulatePhysics(true); 
 }
-
-// Called when the game starts or when spawned
-void AKeyPickUp::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AKeyPickUp::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
