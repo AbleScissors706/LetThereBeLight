@@ -17,5 +17,8 @@ class MYPROJECT4_API AKeyPickUp : public APickUp
 public:
 	// Sets default values for this actor's properties
 	AKeyPickUp();
+
+	//override the WasCollected function - use implementation because its blueprintnative 
+	void WasCollected_Implementation() override;
 	
 };

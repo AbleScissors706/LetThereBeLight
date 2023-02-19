@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SphereComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -50,6 +51,11 @@ AMyCharacter::AMyCharacter()
 
 	InteractionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Interaction Box"));
 	InteractionBox->SetupAttachment(RootComponent);
+
+	//create collection sphere
+	CollectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CollectionSphere"));
+	CollectionSphere->SetupAttachment(RootComponent);
+	CollectionSphere->SetSphereRadius(200.0f);
 
 }
 

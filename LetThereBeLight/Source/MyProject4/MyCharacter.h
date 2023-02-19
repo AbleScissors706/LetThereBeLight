@@ -26,6 +26,13 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class UCameraComponent* CameraComp;
 
+	//collection sphere
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* CollectionSphere;
+
+	//returns collectionsphere  subobject
+	FORCEINLINE class USphereComponent* GetCollectionSphere() const { return CollectionSphere; }
+
 protected:
 
 	void MoveForward(float value);

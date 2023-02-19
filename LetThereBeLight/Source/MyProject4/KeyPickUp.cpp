@@ -9,3 +9,12 @@ AKeyPickUp::AKeyPickUp()
 {
 	GetMesh()->SetSimulatePhysics(true); 
 }
+
+void AKeyPickUp::WasCollected_Implementation()
+{
+	//use base pickup behaviour
+	Super::WasCollected_Implementation();
+
+	//destroy key
+	Destroy();
+}
