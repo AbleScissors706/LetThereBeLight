@@ -57,8 +57,37 @@ AMyCharacter::AMyCharacter()
 	CollectionSphere->SetupAttachment(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
 
+	ImpulseForce = 500.0f;
+
 }
 
+void AMyCharacter::KickForward()
+{
+	FVector Location;
+	FRotator Rotation;
+	FHitResult Hit;
+
+	GetController()->GetPlayerViewPoint(Location, Rotation);
+
+	FVector Start = Location;
+	FVector End = Start + (Rotation.Vector() * TraceDistance);
+
+	FCollisionQueryParams TraceParams;
+	bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+
+	if (bHit)
+	{
+		if (Hit.GetActor()->IsRootComponentMovable())
+		{
+			UStaticMeshComponent* MeshComp = Cast<UStaticMeshComponent>(Hit.GetActor()->GetRootComponent());
+			if (MeshComp)
+			{
+				FVector CameraForward = CameraComp->GetForwardVector();
+				MeshComp->AddImpulse(CameraForward * ImpulseForce * MeshComp->GetMass());
+			}
+		}		
+	}
+}
 
 void AMyCharacter::MoveForward(float Value)
 {
@@ -221,5 +250,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	//interact with objects
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &AMyCharacter::OnInteract);
+
+	//Kick
+	PlayerInputComponent->BindAction("KickForward", IE_Pressed, this, &AMyCharacter::KickForward);
 }
 

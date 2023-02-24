@@ -34,6 +34,14 @@ public:
 	FORCEINLINE class USphereComponent* GetCollectionSphere() const { return CollectionSphere; }
 
 protected:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Kick")
+	float TraceDistance;
+
+	//Impulse
+	UPROPERTY(EditAnywhere)
+	float ImpulseForce;
+
+	void KickForward();
 
 	void MoveForward(float value);
 	void MoveRight(float value);
