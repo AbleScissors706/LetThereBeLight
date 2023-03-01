@@ -57,7 +57,7 @@ AMyCharacter::AMyCharacter()
 	CollectionSphere->SetupAttachment(RootComponent);
 	CollectionSphere->SetSphereRadius(200.0f);
 
-	ImpulseForce = 1000.0f;
+	ImpulseForce = 500.0f;
 
 }
 
