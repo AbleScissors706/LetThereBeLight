@@ -38,8 +38,8 @@ protected:
 	float TraceDistance;
 
 	//Impulse
-	UPROPERTY(EditAnywhere)
-	float ImpulseForce;
+	UPROPERTY(EditAnywhere, Category = "Kick")
+	float ImpulseForce = 50.0f;
 
 	void KickForward();
 
