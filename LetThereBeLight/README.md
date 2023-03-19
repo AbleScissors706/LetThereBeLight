@@ -1,2 +1,0 @@
-# LetThereBeLight
-Team turquoise
